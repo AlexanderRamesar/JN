@@ -1,0 +1,80 @@
+LAMP stack Ubuntu 18.04
+
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04
+
+
+1. Installing Apache web server and updating the firewall
+
+    sudo apt update
+
+    sudo apt install apache2
+
+    sudo ufw app list
+
+    sudo ufw app info "Apache Full"
+
+    sudo ufw allow "Apache Full"
+
+
+  
+2. Installing MySQL
+
+    sudo apt install mysql-server  
+
+    sudo mysql_secure_installation
+
+To enter MySQL
+
+     sudo mysql
+
+If password protected
+
+    mysql -u root -p
+
+where -u is the mysql.user and -p signifies password protection
+
+
+
+3. Installing PHP 
+
+    sudo apt install php libapache2-mod-php php-mysql
+
+
+Change apache's directory index
+
+    sudo nano /etc/apache2/mods-enabled/dir.conf
+
+
+Restart apache
+
+    sudo systemctl restart apache2
+
+Check apache status 
+
+    sudo systemctl status apache2
+
+
+
+4. Setting up a Virtual Host
+
+Create directory for domain
+
+    sudo mkdir /var/www/your_domain
+
+    sudo chown -R $USER:$USER /var/www/your_domain
+
+    sudo chmod -R 755 /var/www/your_domain
+
+    nano /var/www/your_domain/index.php
+
+Create a virtual host file 
+
+    sudo nano /etc/apache2/sites-available/your_domain.conf
+
+    sudo a2ensite your_domain.conf
+
+    sudo a2dissite 000-default.conf
+
+    sudo apache2ctl configtest
+
+    sudo systemctl restart apache2
